@@ -10,8 +10,9 @@ import { getPagination } from 'src/utils';
 export class MealsService {
   constructor(@Inject('MealModel') private Meal: ModelClass<MealModel>) {}
 
-  create(createMealDto: CreateMealDto) {
-    return 'This action adds a new meal';
+  async create(createMealDto: CreateMealDto) {
+    const meal = await this.Meal.query().insert(createMealDto);
+    return { meal };
   }
 
   async findAll(page: number, limit: number, filter: GetMealsDto) {
