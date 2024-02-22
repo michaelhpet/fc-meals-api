@@ -28,3 +28,7 @@ export function getPagination(
     description: `${start} to ${end} of ${total_records}`,
   };
 }
+
+export function success(data: Record<string, unknown>, message: string) {
+  return { status: 'success', message, data };
+}

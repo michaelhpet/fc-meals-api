@@ -14,6 +14,7 @@ import { UpdateMealDto } from './dto/update-meal.dto';
 import { PaginationDto } from 'src/database/dto/pagination.dto';
 import { filter } from 'rxjs';
 import { GetMealsDto } from './dto/get-meals-dto';
+import { success } from 'src/utils';
 
 @Controller('meals')
 export class MealsController {
@@ -25,9 +26,10 @@ export class MealsController {
   }
 
   @Get()
-  findAll(@Query() query: GetMealsDto) {
+  async findAll(@Query() query: GetMealsDto) {
     const { page = 1, limit = 10, ...filter } = query;
-    return this.mealsService.findAll(page, limit, filter);
+    const data = await this.mealsService.findAll(page, limit, filter);
+    return success(data, 'Meals fetched successfully');
   }
 
   @Get(':id')
