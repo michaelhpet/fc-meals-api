@@ -4,13 +4,9 @@ const config: { [key: string]: Knex.Config } = {
   development: {
     client: 'postgresql',
     connection: {
-      database: 'fc_meals',
-      user: 'postgres',
-      password: 'root',
-    },
-    pool: {
-      min: 2,
-      max: 10,
+      database: process.env.DATABASE_NAME,
+      user: process.env.DATABASE_USER,
+      password: process.env.DATABASE_PASSWORD,
     },
     migrations: {
       tableName: 'knex_migrations',
