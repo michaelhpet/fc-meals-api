@@ -49,7 +49,7 @@ npm start
 #### Check OpenAPI spec descriptions for available endpoints
 
 ```
-open localhost:3000/docs
+open http://localhost:3000/docs
 ```
 
 ## Authors
