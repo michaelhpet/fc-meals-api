@@ -31,8 +31,9 @@ export class MealsService {
     };
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} meal`;
+  async findOne(id: number) {
+    const meal = await this.Meal.query().findById(id).execute();
+    return { meal };
   }
 
   update(id: number, updateMealDto: UpdateMealDto) {

@@ -7,6 +7,8 @@ import {
   Param,
   Delete,
   Query,
+  HttpException,
+  HttpStatus,
 } from '@nestjs/common';
 import { MealsService } from './meals.service';
 import { CreateMealDto } from './dto/create-meal.dto';
@@ -21,8 +23,9 @@ export class MealsController {
   constructor(private readonly mealsService: MealsService) {}
 
   @Post()
-  create(@Body() createMealDto: CreateMealDto) {
-    return this.mealsService.create(createMealDto);
+  async create(@Body() createMealDto: CreateMealDto) {
+    const data = await this.mealsService.create(createMealDto);
+    return success(data, 'Meal created successfully');
   }
 
   @Get()
@@ -33,8 +36,11 @@ export class MealsController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.mealsService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    const data = await this.mealsService.findOne(+id);
+    if (!data.meal)
+      throw new HttpException('Meal not found', HttpStatus.BAD_REQUEST);
+    return success(data, 'Meal fetched successfully');
   }
 
   @Patch(':id')
