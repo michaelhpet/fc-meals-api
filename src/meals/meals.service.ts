@@ -37,7 +37,7 @@ export class MealsService {
   }
 
   async update(id: number, updateMealDto: UpdateMealDto) {
-    const meal = await this.Meal.query().findById(id).patch(updateMealDto);
+    const meal = await this.Meal.query().patchAndFetchById(id, updateMealDto);
     return { meal };
   }
 
