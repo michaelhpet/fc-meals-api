@@ -8,6 +8,7 @@ import {
   HttpException,
 } from '@nestjs/common';
 import { Response } from 'express';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 @Catch(HttpException)
 export class HttpExceptionFilter implements ExceptionFilter {
@@ -39,6 +40,13 @@ async function bootstrap() {
     }),
   );
   app.useGlobalFilters(new HttpExceptionFilter());
+  const document = new DocumentBuilder()
+    .setTitle('FC Meals API')
+    .setDescription('FC Meals API documentation')
+    .setVersion('1.0')
+    .addTag('meals')
+    .build();
+  SwaggerModule.setup('docs', app, SwaggerModule.createDocument(app, document));
   await app.listen(3000);
 }
 bootstrap();
