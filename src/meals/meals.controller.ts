@@ -39,13 +39,17 @@ export class MealsController {
   async findOne(@Param('id') id: string) {
     const data = await this.mealsService.findOne(+id);
     if (!data.meal)
-      throw new HttpException('Meal not found', HttpStatus.BAD_REQUEST);
+      throw new HttpException('Meal does not exist', HttpStatus.BAD_REQUEST);
     return success(data, 'Meal fetched successfully');
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateMealDto: UpdateMealDto) {
-    return this.mealsService.update(+id, updateMealDto);
+  async update(@Param('id') id: string, @Body() updateMealDto: UpdateMealDto) {
+    const oldData = await this.mealsService.findOne(+id);
+    if (!oldData.meal)
+      throw new HttpException('Meal does not exist', HttpStatus.BAD_REQUEST);
+    const data = await this.mealsService.update(+id, updateMealDto);
+    return success(data, 'Meal updated successfully');
   }
 
   @Delete(':id')
