@@ -41,7 +41,8 @@ export class MealsService {
     return { meal };
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} meal`;
+  async remove(id: number) {
+    await this.Meal.query().deleteById(id);
+    return null;
   }
 }

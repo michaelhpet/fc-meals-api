@@ -13,8 +13,6 @@ import {
 import { MealsService } from './meals.service';
 import { CreateMealDto } from './dto/create-meal.dto';
 import { UpdateMealDto } from './dto/update-meal.dto';
-import { PaginationDto } from 'src/database/dto/pagination.dto';
-import { filter } from 'rxjs';
 import { GetMealsDto } from './dto/get-meals-dto';
 import { success } from 'src/utils';
 
@@ -53,7 +51,11 @@ export class MealsController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.mealsService.remove(+id);
+  async remove(@Param('id') id: string) {
+    const oldData = await this.mealsService.findOne(+id);
+    if (!oldData.meal)
+      throw new HttpException('Meal does not exist', HttpStatus.BAD_REQUEST);
+    const data = await this.mealsService.remove(+id);
+    return success(data, 'Meal deleted successfully');
   }
 }

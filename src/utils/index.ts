@@ -29,6 +29,6 @@ export function getPagination(
   };
 }
 
-export function success(data: Record<string, unknown>, message: string) {
+export function success(data: Record<string, unknown> | null, message: string) {
   return { status: 'success', message, data };
 }
