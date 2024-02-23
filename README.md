@@ -31,6 +31,15 @@ DATABASE_USER=
 DATABASE_PASSWORD=
 ```
 
+> Please make sure to have created a local postgres database with these credentials
+
+#### Migrate and seed database
+
+```
+npm run migrate
+npm run seed
+```
+
 #### Start the server
 
 ```
