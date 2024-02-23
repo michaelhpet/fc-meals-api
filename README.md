@@ -42,3 +42,7 @@ npm start
 ```
 open localhost:3000/docs
 ```
+
+## Authors
+
+- [Michael Peter](https://github.com/michaelhpet)
